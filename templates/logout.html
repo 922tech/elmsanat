@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<head>
+    <title>Log Out Page</title>
+</head>    
+<body>
+    <form action="/logout/" method="post"  >
+        {% csrf_token %}
+        <label for="logout"> Log out </label>
+        <input id="logout" type="submit">
+    </form>
+
+</body>

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<head>
+    <title>Authorization</title>
+</head>    
+<body>
+    <form action="/authorize/" method="post"  >
+        {% csrf_token %}
+        <div>
+
+            <label for="client-id">client-id</label>
+            <input id="client-id" name="client_id" type="text">
+        </div>
+<div>
+
+    <label for="client-secret">client-secret</label>
+    <input id="client-secret" name="client_secret" type="text">
+</div>
+    <label for="client-secret">grant-type</label>
+
+        <input id="grant-type" name="grant_type" type="text" value="">
+
+
+    </form>
+</body>

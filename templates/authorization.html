@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<head>
+    <title>Authorization</title>
+</head>    
+<body>
+    <form action="/o/authorize/" method="post"  >
+        {% csrf_token %}
+        <div>
+
+            <label for="client-id">client-id</label>
+            <input id="client-id" name="client_id" type="text">
+        </div>
+        <div>
+
+            <label for="client-secret">client-secret</label>
+            <input id="client-secret" name="client_secret" type="text">
+        </div>
+        <div>
+            <label for="client-secret">grant-type</label>
+            <input id="grant-type" name="grant_type" type="text" >
+        </div>
+
+        <div>
+            <label for="redirect_uri">redirect_uri</label>
+            <input id="redirect_uri" name="redirect_uri" type="text" value="http://127.0.0.1:8000/login/">
+        </div>
+        <div>
+            <label for="scope">scope</label>
+            <input id="scope" name="scope" type="text" >
+        </div>
+        <div>
+            <label for="response_type">response_type</label>
+            <input id="response_type" name="response_type" type="text" value="code">
+        </div>
+
+        <input type="submit" >
+
+
+    </form>
+
+</body>
