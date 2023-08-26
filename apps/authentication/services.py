@@ -7,6 +7,7 @@ client_secret = settings.OAUTH_CREDENTIALS['login']['client_secret']
 token_url = settings.TOKEN_URL
 revoke_token_url = settings.REVOKE_TOKEN_URL
 
+
 class AuthService:
 
     @staticmethod
