@@ -7,7 +7,10 @@ from django.http import StreamingHttpResponse
 
 
 class AsyncStreamingHttpResponse(StreamingHttpResponse):
-
+    """
+    Works like `StreamingHttpResponse` but as opposed to that,
+    it does not lock the whole processing of the server.
+    """
     def __init__(self, streaming_content=(), *args, **kwargs):
         sync_streaming_content = self.get_sync_iterator(streaming_content)
         super().__init__(streaming_content=sync_streaming_content, *args, **kwargs)
@@ -18,8 +21,13 @@ class AsyncStreamingHttpResponse(StreamingHttpResponse):
         return iter([chunk async for chunk in stream])
 
     def get_sync_iterator(self, async_iterable):
-        # this function runs the convert_async_iterable 
-        nest_asyncio.apply() # to avoid asyncio running event loop error
+        """
+        Runs `the convert_async_iterable` eventhough
+        it is.
+        Thanks to `nest_asyncio` it does not get asyncio
+        running event loop related errors
+        """
+        nest_asyncio.apply()
 
         loop = asyncio.new_event_loop()
         asyncio.set_event_loop(loop)
