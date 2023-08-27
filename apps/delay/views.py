@@ -1,8 +1,6 @@
-import time
-import datetime
 from .services import AsyncStreamingHttpResponse
-import datetime
 import time
+import datetime
 
 
 async def stream(request):

@@ -1,3 +1,6 @@
+"""
+This module provides an async http stream response.
+"""
 import asyncio
 import nest_asyncio
 from django.http import StreamingHttpResponse
@@ -15,7 +18,8 @@ class AsyncStreamingHttpResponse(StreamingHttpResponse):
         return iter([chunk async for chunk in stream])
 
     def get_sync_iterator(self, async_iterable):
-        nest_asyncio.apply()
+        # this function runs the convert_async_iterable 
+        nest_asyncio.apply() # to avoid asyncio running event loop error
 
         loop = asyncio.new_event_loop()
         asyncio.set_event_loop(loop)

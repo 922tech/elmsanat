@@ -1,11 +1,10 @@
-# from django.test import TestCase
+"""Generating fake data for the database"""
 
 from faker import Faker
-from model_bakery import baker
-from .models.models import Post, Comment, Category
+from .models.models import Post, Category
 from django.contrib.auth import get_user_model
 from django.db import models 
-from typing import Union, Any, Callable
+from typing import  Any, Callable
 
 user_model = get_user_model()
 
@@ -13,6 +12,15 @@ faker = Faker('en_US')
 
 
 class FakeModelFactory:
+    """
+    The tool to create fake data.
+
+    params: modle: table in which the data will be persisted
+
+    params: fake_field_creator: the function which returns
+            a dictionary containing fields and faker implementations
+    
+    """
     def __init__(
             self,
             model: models.base.ModelBase, 
@@ -26,7 +34,7 @@ class FakeModelFactory:
         self.model.objects.bulk_create(objs)
         
 
-Post.objects.bulk_create
+# specify how many of records of each model you want 
 FAKE_OBJECTS_QUANTITY = {
     'user':1000,
     'category':20,
@@ -63,7 +71,7 @@ def category_fake_field_creator():
 fake_category_factory = FakeModelFactory(Category,category_fake_field_creator)
 fake_post_factory = FakeModelFactory(Post, post_fake_field_creator)
 
-# fake_category_factory.create_fake_record(FAKE_OBJECTS_QUANTITY['category'])
+fake_category_factory.create_fake_record(FAKE_OBJECTS_QUANTITY['category'])
 fake_post_factory.create_fake_record(FAKE_OBJECTS_QUANTITY['post'])
 
 
