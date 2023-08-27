@@ -129,7 +129,7 @@ class Post(TitleMixin, DateMixin, IsActiveMixin, SoftDeleteMixin):
     
 
     def get_absolute_url(self):
-        return reverse('view_post', args=[self.slug])
+        return reverse('blog_post', args=[self.slug])
 
     class Meta:
         verbose_name = _('Post')

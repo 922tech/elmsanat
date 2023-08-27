@@ -12,9 +12,14 @@ ALLOWED_HOSTS = ['127.0.0.1','aras', 'localhost']
 SITE_ID = 1
 ROOT_URLCONF = 'config.urls'
 WSGI_APPLICATION = 'config.wsgi.application'
+ASGI_APPLICATION = 'config.asgi.application'
 ##################### Application definition ###################################################
 
 INSTALLED_APPS = [
+    # asgi
+    'daphne',
+    'apps.delay',
+
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -23,7 +28,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.sites',
     
-    
     # 3ed party
     'rest_framework',
     'rest_framework_simplejwt',
@@ -31,14 +35,11 @@ INSTALLED_APPS = [
     'ckeditor',
     'debug_toolbar',
     'oauth2_provider',
+    'channels',
 
     # local apps in 'apps',
     'apps.blog',
     'apps.users',
-    'apps.delay',
-
-    # 'apps.blog',
-    
 ]
 
 ########################################################################################
@@ -216,4 +217,12 @@ OAUTH_CREDENTIALS = {
     },
 }
 
- 
+############################## Channels #########################################
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            "hosts": [('127.0.0.1', 6379)],
+        },
+    },
+}

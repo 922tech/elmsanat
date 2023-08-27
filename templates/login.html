@@ -3,6 +3,13 @@
     <title>Authorization</title>
 </head>    
 <body>
+    <div>This view is for testing Oauth2 authentication backend.
+        <br>
+         For session based authentication head to 
+        <a href="/admin/">Admin login page.</a>
+    </div>
+
+    <br>
     <form action="/login/" method="post"  >
         {% csrf_token %}
         <div>

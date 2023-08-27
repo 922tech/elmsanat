@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<head>
+    <title>Delay view</title>
+    <script>
+        const element = document.getElementById('event')
+        function startStream(){
+            const source = new EventSource('stream/')
+            // const source = new EventSource('api/v1/delay/asgi/')
+            console.log(source, typeof source)
+            // source.OPEN()
+            source.onmessage = (event) => {
+                document.querySelector('#event').innerHTML = event.data
+            }
+        }
+        document.querySelector('#fire').onClick = startStream
+    </script>
+</head>    
+<body>
+    <button id="fire" onclick="startStream()">Cick to start the stream</button>
+    <div id="event">
+        
+    </div>
+
+
+</body>

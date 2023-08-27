@@ -15,15 +15,17 @@ urlpatterns = [
     path('o/', include('oauth2_provider.urls', namespace='oauth2_provider')),
 
     path('api/v1/api-docs/', include_docs_urls(title='Elm-o-SanatBlog API')),
-    path('api/v1/schema', get_schema_view(
+    path('api/v1/schema',
+            get_schema_view(
             title="Your Project",
             description="API for all things …",
             version="1.0.0"
-        ),
-        name='openapi-schema'),
-    path('blog/', include('apps.blog.urls')),
+            ),
+        name='openapi-schema'
+    ),
+    # path('blog/', include('apps.blog.urls')),
+    path('api/v1/blog/', include('apps.blog.urls')),
     path('', include('apps.authentication.urls')),
-    # path('api/v1/blog/', include('apps.blog.urls')),
     path('api/v1/delay/', include('apps.delay.urls')),
     
     # path('v1/auth/', include('apps.auth.urls')),

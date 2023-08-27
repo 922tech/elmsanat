@@ -4,19 +4,23 @@ from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
 
-# class SoftDeleteQuerySet(models.QuerySet):
-#     def include_deleteds(self):
-#         return self.filter(is_delete=False)
+class SoftDeleteQuerySet(models.QuerySet):
+    def delete(self):
+        return self.update(is_delete=True)
 
 
-class SoftDeleteMixinManager(models.Manager):
+class SoftDeleteManager(models.Manager):
     def get_queryset(self) -> QuerySet:
-        return super().get_queryset().filter(is_deleted=False)
+        return SoftDeleteQuerySet(self.model, using=self._db).exclude(is_deleted=True)
+    
+    def deleted_objects(self)  -> QuerySet:
+        return SoftDeleteQuerySet(self.model, using=self._db).filter(is_deleted=True)
+
     
 
-class DeletedObjectsManager(models.Manager):
-    def get_queryset(self) -> QuerySet:
-        return super().get_queryset().filter(is_deleted=True)
+# class DeletedObjectsManager(models.Manager):
+#     def get_queryset(self) -> QuerySet:
+#         return super().get_queryset().filter(is_deleted=True)
     
 
 class SoftDeleteMixin(models.Model):
@@ -25,8 +29,8 @@ class SoftDeleteMixin(models.Model):
         choices=[(True,'Yes'), (False,'No')]
     )
     deleted_on = models.DateTimeField(null=True, blank=True, verbose_name='Deleted on')
-    objects = SoftDeleteMixinManager()
-    deleted_objects = DeletedObjectsManager()
+    objects = SoftDeleteManager()
+    # deleted_objects = DeletedObjectsManager()
     def delete(self):
         self.is_deleted = True
         self.deleted_on = timezone.now()

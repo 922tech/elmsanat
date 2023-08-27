@@ -1,8 +1,7 @@
-from django.urls import path, include
-from .views import delay_view
-
+from django.urls import path, re_path, include
+from .views import  stream
 
 urlpatterns = [
-    path('', delay_view),
+    path('stream',stream)
 
 ]

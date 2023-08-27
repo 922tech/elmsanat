@@ -4,7 +4,7 @@ from rest_framework.routers import DefaultRouter
 
 router = DefaultRouter()
 
-router.register(r'',PostViewSet)
+router.register(r'',PostViewSet, basename='blog_post')
 
 urlpatterns = [
 

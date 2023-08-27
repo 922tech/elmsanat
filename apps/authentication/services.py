@@ -2,6 +2,7 @@ import requests
 import json
 from config import settings
 
+
 client_id = settings.OAUTH_CREDENTIALS['login']['client_id']
 client_secret = settings.OAUTH_CREDENTIALS['login']['client_secret']
 token_url = settings.TOKEN_URL

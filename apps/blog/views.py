@@ -9,6 +9,8 @@ from .models.models import Post
 from .serializers import PostSerializer
 from .tasks import increment_post_view
 from .services import BlogService 
+from django.views.decorators.cache import cache_page
+
 # from time import time
 # from django.core.cache import cache
 
@@ -20,6 +22,10 @@ class PostViewSet(ModelViewSet):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
     permission_classes = [IsAuthenticated]
+
+    # @method_decorator(cache_page(CACHE_TTL))
+    def list(self, request, *args, **kwargs):
+        return super().list(request, *args, **kwargs)
 
     @method_decorator(
     cache_page_after_callback(
