@@ -4,6 +4,7 @@ This module provides an async http stream response.
 import asyncio
 import nest_asyncio
 from django.http import StreamingHttpResponse
+from typing import AsyncGenerator, AsyncIterator, Any, Iterator, Union
 
 
 class AsyncStreamingHttpResponse(StreamingHttpResponse):
@@ -11,21 +12,23 @@ class AsyncStreamingHttpResponse(StreamingHttpResponse):
     Works like `StreamingHttpResponse` but as opposed to that,
     it does not lock the whole processing of the server.
     """
-    def __init__(self, streaming_content=(), *args, **kwargs):
+    def __init__(self, streaming_content: AsyncGenerator[str, Any], *args, **kwargs):
+
         sync_streaming_content = self.get_sync_iterator(streaming_content)
         super().__init__(streaming_content=sync_streaming_content, *args, **kwargs)
 
+
     @staticmethod
-    async def convert_async_iterable(stream):
-        """Accepts async_generator and async_iterator"""
+    async def convert_async_iterable(stream: Union[AsyncGenerator[str, Any], AsyncIterator]) -> Iterator:
+
         return iter([chunk async for chunk in stream])
 
-    def get_sync_iterator(self, async_iterable):
+
+    def get_sync_iterator(self, async_iterable: AsyncGenerator[str, Any]) -> Iterator:
         """
-        Runs `the convert_async_iterable` eventhough
-        it is.
-        Thanks to `nest_asyncio` it does not get asyncio
-        running event loop related errors
+        Runs the `convert_async_iterable` within a non-async function.
+        Thanks to `nest_asyncio` it does not get asyncio running
+        event loop related errors
         """
         nest_asyncio.apply()
 

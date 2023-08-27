@@ -11,7 +11,7 @@ class BlogService:
         return string.replace(' ', '-')
     
     @staticmethod
-    def get_request_kwargs(request: HttpRequest):
+    def get_request_kwargs(request):
         """
         Extracts the parameters such as pk, slug etc.  
         (lookup_fields) from django HttpRequest object
